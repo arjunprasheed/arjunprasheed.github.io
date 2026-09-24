@@ -1,1 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090b">
+<title>Arjun Prasheed — Digital Space</title>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #08090b;
+  --text: #f2f2f0;
+  --muted: #92949b;
+  --line: rgba(255,255,255,.10);
+  --glass: rgba(255,255,255,.045);
+  --mx: 50%;
+  --my: 50%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ---------- BACKGROUND ---------- */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -30%;
+  z-index: -3;
+  background:
+    radial-gradient(circle at var(--mx) var(--my),
+      rgba(255,255,255,.09) 0,
+      rgba(255,255,255,.025) 18%,
+      transparent 42%);
+  transition: background .25s ease;
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  opacity: .045;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+/* ---------- INTRO ---------- */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #08090b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 1s cubic-bezier(.77,0,.18,1),
+    visibility 1s;
+}
+
+.intro.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-inner {
+  text-align: center;
+  animation: introIn 1.2s cubic-bezier(.16,1,.3,1);
+}
+
+.intro-name {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2.8rem, 9vw, 8rem);
+  font-weight: 700;
+  letter-spacing: -.065em;
+  line-height: .9;
+}
+
+.intro-sub {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: .8rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.enter {
+  margin-top: 55px;
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  color: var(--text);
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 100px;
+  padding: 13px 20px;
+  font: inherit;
+  font-size: .75rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: .35s ease;
+}
+
+.enter span {
+  display: inline-block;
+  transition: transform .35s ease;
+}
+
+.enter:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.25);
+}
+
+.enter:hover span {
+  transform: translateX(5px);
+}
+
+@keyframes introIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- NAV ---------- */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 25px 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+}
+
+.logo {
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+  letter-spacing: -.05em;
+  font-size: 1rem;
+}
+
+.nav-right {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-right a {
+  color: white;
+  text-decoration: none;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .13em;
+  opacity: .7;
+  transition: opacity .25s;
+}
+
+.nav-right a:hover {
+  opacity: 1;
+}
+
+/* ---------- GENERAL ---------- */
+
+main {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.16,1,.3,1);
+}
+
+main.show {
+  opacity: 1;
+  transform: none;
+}
+
+section {
+  padding: 12vw 7vw;
+  position: relative;
+}
+
+.label {
+  color: var(--muted);
+  font-size: .68rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.line {
+  height: 1px;
+  background: var(--line);
+  width: 100%;
+  margin: 35px 0;
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 8vh;
+  overflow: hidden;
+}
+
+.hero-content {
+  width: 100%;
+}
+
+.hero-small {
+  color: var(--muted);
+  font-size: .78rem;
+  letter-spacing: .1em;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(4rem, 13vw, 13rem);
+  line-height: .78;
+  letter-spacing: -.085em;
+  font-weight: 700;
+  max-width: 1200px;
+}
+
+.hero h1 span {
+  display: block;
+}
+
+.hero h1 .indent {
+  margin-left: 9vw;
+}
+
+.hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 55px;
+  gap: 30px;
+}
+
+.hero-description {
+  max-width: 420px;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: .92rem;
+}
+
+.scroll {
+  color: var(--muted);
+  font-size: .68rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+/* ---------- ABOUT ---------- */
+
+.about {
+  min-height: 85vh;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 8vw;
+  align-items: start;
+}
+
+.about-title {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2.4rem, 5vw, 5rem);
+  line-height: .95;
+  letter-spacing: -.06em;
+  font-weight: 600;
+}
+
+.about-text {
+  max-width: 650px;
+  font-size: clamp(1.15rem, 2vw, 1.7rem);
+  line-height: 1.5;
+  letter-spacing: -.025em;
+}
+
+.about-text em {
+  color: white;
+  font-style: normal;
+}
+
+.about-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 80px;
+}
+
+.meta-card {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.meta-card strong {
+  display: block;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.meta-card small {
+  color: var(--muted);
+  font-size: .75rem;
+}
+
+/* ---------- ARCHIVE ---------- */
+
+.archive {
+  padding-top: 8vw;
+}
+
+.archive-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.archive-heading h2 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(3rem, 8vw, 8rem);
+  letter-spacing: -.08em;
+  line-height: .8;
+}
+
+.archive-grid {
+  margin-top: 90px;
+  display: grid;
+  grid-template-columns: 1.4fr .8fr;
+  gap: 25px;
+}
+
+.archive-card {
+  min-height: 480px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--glass);
+  position: relative;
+  overflow: hidden;
+  transition: transform .5s cubic-bezier(.16,1,.3,1), border-color .4s;
+}
+
+.archive-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255,255,255,.25);
+}
+
+.archive-card:first-child {
+  min-height: 600px;
+}
+
+.card-number {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  font-size: .68rem;
+  color: var(--muted);
+  letter-spacing: .15em;
+}
+
+.card-content {
+  position: absolute;
+  bottom: 28px;
+  left: 28px;
+  right: 28px;
+}
+
+.card-content h3 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2rem, 4vw, 4rem);
+  letter-spacing: -.06em;
+  line-height: .9;
+}
+
+.card-content p {
+  color: var(--muted);
+  margin-top: 12px;
+  font-size: .82rem;
+}
+
+.abstract {
+  position: absolute;
+  width: 330px;
+  height: 330px;
+  border-radius: 50%;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff, transparent 8%),
+    radial-gradient(circle at 55% 45%, rgba(255,255,255,.35), transparent 27%),
+    radial-gradient(circle at center, rgba(255,255,255,.08), transparent 65%);
+  filter: blur(.2px);
+  animation: float 7s ease-in-out infinite;
+}
+
+.abstract::before,
+.abstract::after {
+  content: "";
+  position: absolute;
+  inset: -25px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 48% 52% 58% 42%;
+  animation: spin 15s linear infinite;
+}
+
+.abstract::after {
+  inset: -50px;
+  border-radius: 58% 42% 46% 54%;
+  animation-direction: reverse;
+  animation-duration: 20s;
+}
+
+@keyframes float {
+  50% { transform: translate(-50%, -56%) scale(1.04); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- CONNECT ---------- */
+
+.connect {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.connect h2 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(3.5rem, 10vw, 10rem);
+  letter-spacing: -.09em;
+  line-height: .78;
+}
+
+.socials {
+  margin-top: 75px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.social {
+  color: var(--text);
+  text-decoration: none;
+  padding: 25px 0;
+  border-bottom: 1px solid var(--line);
+  margin-right: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Manrope", sans-serif;
+  font-size: 1rem;
+  transition: padding .4s, color .4s;
+}
+
+.social span:last-child {
+  color: var(--muted);
+  transition: transform .4s;
+}
+
+.social:hover {
+  padding-left: 10px;
+}
+
+.social:hover span:last-child {
+  transform: translate(5px,-5px);
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+  padding: 30px 7vw 45px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- SCROLL REVEAL ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(45px);
+  transition: opacity 1s cubic-bezier(.16,1,.3,1),
+              transform 1s cubic-bezier(.16,1,.3,1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 700px) {
+
+  nav {
+    padding: 20px 5vw;
+  }
+
+  .nav-right {
+    gap: 15px;
+  }
+
+  .nav-right a {
+    font-size: .6rem;
+  }
+
+  section {
+    padding: 24vw 6vw;
+  }
+
+  .hero {
+    min-height: 95vh;
+    padding-bottom: 8vh;
+  }
+
+  .hero h1 {
+    font-size: clamp(4rem, 20vw, 8rem);
+  }
+
+  .hero h1 .indent {
+    margin-left: 0;
+  }
+
+  .hero-bottom {
+    align-items: flex-start;
+  }
+
+  .scroll {
+    display: none;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .about-meta {
+    grid-template-columns: 1fr;
+    margin-top: 55px;
+    gap: 30px;
+  }
+
+  .archive-heading {
+    display: block;
+  }
+
+  .archive-grid {
+    grid-template-columns: 1fr;
+    margin-top: 55px;
+  }
+
+  .archive-card,
+  .archive-card:first-child {
+    min-height: 420px;
+  }
+
+  .socials {
+    grid-template-columns: 1fr;
+  }
+
+  .social {
+    margin-right: 0;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div class="intro" id="intro">
+  <div class="intro-inner">
+    <div class="intro-name">ARJUN</div>
+    <div class="intro-sub">a little corner of the internet</div>
+
+    <button class="enter" id="enter">
+      Enter
+      <span>↗</span>
+    </button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">AP.</div>
+
+  <div class="nav-right">
+    <a href="#about">About</a>
+    <a href="#archive">Archive</a>
+    <a href="#connect">Elsewhere</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+
+      <div class="hero-small reveal">
+        17 · India / Qatar · 2026
+      </div>
+
+      <h1 class="reveal">
+        <span>ARJUN</span>
+        <span class="indent">PRASHEED</span>
+      </h1>
+
+      <div class="hero-bottom reveal">
+        <p class="hero-description">
+          Welcome to my little corner of the internet.
+          A personal space for the people, places, moments
+          and random things that make up my world.
+        </p>
+
+        <div class="scroll">Scroll to explore ↓</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+
+    <div class="about-grid">
+
+      <div class="label reveal">01 / About</div>
+
+      <div>
+
+        <div class="about-text reveal">
+          I'm <em>Arjun</em> — a student, an occasional
+          photographer, a chronic overthinker, and someone
+          who likes turning ordinary things into something
+          a little more interesting.
+          <br><br>
+          This site is deliberately simple.
+          It's not a résumé. It's just <em>mine.</em>
+        </div>
+
+        <div class="about-meta reveal">
+
+          <div class="meta-card">
+            <strong>Based</strong>
+            <small>India</small>
+          </div>
+
+          <div class="meta-card">
+            <strong>Currently</strong>
+            <small>Class XII</small>
+          </div>
+
+          <div class="meta-card">
+            <strong>Here for</strong>
+            <small>Good moments</small>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ARCHIVE -->
+  <section class="archive" id="archive">
+
+    <div class="archive-heading reveal">
+      <div class="label">02 / Archive</div>
+      <h2>THE<br>STUFF.</h2>
+    </div>
+
+    <div class="archive-grid">
+
+      <div class="archive-card reveal">
+        <div class="card-number">ARCHIVE / 001</div>
+
+        <div class="abstract"></div>
+
+        <div class="card-content">
+          <h3>Moments.</h3>
+          <p>
+            The photographs, memories and random pieces
+            of life worth keeping.
+          </p>
+        </div>
+      </div>
+
+      <div class="archive-card reveal">
+        <div class="card-number">ARCHIVE / 002</div>
+
+        <div class="card-content">
+          <h3>More<br>coming.</h3>
+          <p>
+            This space will grow as life happens.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONNECT -->
+  <section class="connect" id="connect">
+
+    <div class="label reveal">03 / Elsewhere</div>
+
+    <h2 class="reveal">
+      FIND<br>ME.
+    </h2>
+
+    <div class="socials reveal">
+
+      <a class="social" href="#" target="_blank">
+        <span>Instagram</span>
+        <span>↗</span>
+      </a>
+
+      <a class="social" href="#" target="_blank">
+        <span>Snapchat</span>
+        <span>↗</span>
+      </a>
+
+      <a class="social" href="#" target="_blank">
+        <span>YouTube</span>
+        <span>↗</span>
+      </a>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <span>© 2026 Arjun Prasheed</span>
+  <span>Made somewhere on the internet</span>
+</footer>
+
+
+<script>
+
+/* ---------- INTRO ---------- */
+
+const intro = document.getElementById("intro");
+const main = document.getElementById("main");
+const enter = document.getElementById("enter");
+
+enter.addEventListener("click", () => {
+
+  intro.classList.add("hide");
+
+  setTimeout(() => {
+    main.classList.add("show");
+  }, 450);
+
+});
+
+
+/* ---------- MOUSE REACTIVE BACKGROUND ---------- */
+
+document.addEventListener("mousemove", (e) => {
+
+  const x = (e.clientX / window.innerWidth) * 100;
+  const y = (e.clientY / window.innerHeight) * 100;
+
+  document.documentElement.style.setProperty("--mx", `${x}%`);
+  document.documentElement.style.setProperty("--my", `${y}%`);
+
+});
+
+
+/* ---------- SCROLL REVEAL ---------- */
+
+const observer = new IntersectionObserver(
+  (entries) => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+
+    });
+
+  },
+  {
+    threshold: 0.12
+  }
+);
+
+document.querySelectorAll(".reveal").forEach(el => {
+  observer.observe(el);
+});
+
+
+/* ---------- MAGNETIC SOCIAL LINKS ---------- */
+
+document.querySelectorAll(".social").forEach(link => {
+
+  link.addEventListener("mousemove", (e) => {
+
+    const rect = link.getBoundingClientRect();
+
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    link.style.transform =
+      `translate(${x * 0.04}px, ${y * 0.04}px)`;
+
+  });
+
+  link.addEventListener("mouseleave", () => {
+    link.style.transform = "";
+  });
+
+});
+
+
+/* ---------- EASTER EGG ---------- */
+
+let clicks = 0;
+
+document.querySelector(".logo").addEventListener("click", () => {
+
+  clicks++;
+
+  if (clicks === 5) {
+
+    document.body.style.transition = "filter .6s ease";
+    document.body.style.filter = "invert(1)";
+
+    setTimeout(() => {
+      document.body.style.filter = "";
+    }, 700);
+
+    clicks = 0;
+  }
+
+});
+
+</script>
+
+</body>
+</html>
